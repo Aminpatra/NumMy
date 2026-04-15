@@ -13,7 +13,7 @@ class NummyArray:
         self.data = list(self.__flatten(iterable))
         self.ndim = len(self.shape)
         self.size = prod(self.shape)
-        self.type = type(self.data[0]) if self.data else None
+        self.dtype = type(self.data[0]) if self.data else None
       
       else: raise ValueError('Elements Should Have The Same Data Type')
 
@@ -75,7 +75,7 @@ print(d1.data)
 print(d2.data)
 print(d3.data)
 
-print(d0.type)
-print(d1.type)
-print(d2.type)
-print(d3.type)
+print(d0.dtype)
+print(d1.dtype)
+print(d2.dtype)
+print(d3.dtype)
