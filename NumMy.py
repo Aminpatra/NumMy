@@ -13,7 +13,7 @@ class NummyArray:
         self.data = list(self.__flatten(iterable))
         self.ndim = len(self.shape)
         self.size = prod(self.shape)
-        self.type = self.arr_type(iterable)
+        self.type = type(self.data[0]) if self.data else None
       
       else: raise ValueError('Elements Should Have The Same Data Type')
 
@@ -53,29 +53,29 @@ class NummyArray:
   
 
   def arr_type(self, iterable):
+    
+    data = self.__flatten(iterable)
+    if data:
+      type1 = type(data[0])
+      for element in data:
+        if type(element) != type1:
+          return False
+    return True
 
-    if iterable:
-      try:
-        if (self.__valid_input(iterable) and not self.__valid_input(iterable[0])):
-          # if it is not an empty iterable
-            first_element_type = type(iterable[0])
-            for i in range(len(iterable)):
-              for element in iterable[i]:
-                if (type(element) != first_element_type):
-                  return False
-      except:
-        print(iterable)
-        
-    else:
-      return None
 
-    if not (self.__valid_input(iterable)):
-      return type(iterable)
 
-    return self.arr_type(iterable[0])
-  
 
-a = NummyArray([1,2])
-print(a.data)
-  
-  
+d0 = NummyArray([[], []])
+d1 = NummyArray([1, 2, 1])
+d2 = NummyArray([[1, 2], [3, 4]])
+d3 = NummyArray([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])
+
+print(d0.data)
+print(d1.data)
+print(d2.data)
+print(d3.data)
+
+print(d0.type)
+print(d1.type)
+print(d2.type)
+print(d3.type)
