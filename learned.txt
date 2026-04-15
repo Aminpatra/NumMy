@@ -1,2 +1,4 @@
+Time Taken: 3:30h
+
 
 1- In NumPy; the data is first flatten and then stored, and we have the shape metadata so we can reconstruct the matrix/vector again.
