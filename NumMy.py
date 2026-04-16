@@ -9,6 +9,7 @@ class NummyArray:
       if (self.arr_type(iterable)):
 
         shape = self.arr_shape(iterable)
+        self.iterable = iterable
         self.shape = tuple(shape) if shape else (0,)
         self.data = list(self.__flatten(iterable))
         self.ndim = len(self.shape)
@@ -18,7 +19,12 @@ class NummyArray:
       else: raise ValueError('Elements Should Have The Same Data Type')
 
     else: raise ValueError('Only Accepts List/Tuple Objects')
-    
+
+  def __repr__(self):
+    return (f"NumMyArray({self.iterable}), "
+            f"shape={self.shape}, "
+            f"ndim={self.ndim}, "
+            f"dtype={self.dtype.__name__}")
   
   def __valid_input(self, iterable):
     return isinstance(iterable, list) or isinstance(iterable, tuple)
@@ -70,12 +76,10 @@ d1 = NummyArray([1, 2, 1])
 d2 = NummyArray([[1, 2], [3, 4]])
 d3 = NummyArray([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])
 
+print(d1)
+
 print(d0.data)
 print(d1.data)
-print(d2.data)
-print(d3.data)
-
-print(d0.dtype)
-print(d1.dtype)
 print(d2.dtype)
 print(d3.dtype)
+
