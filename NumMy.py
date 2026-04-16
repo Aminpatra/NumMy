@@ -2,13 +2,14 @@
 from math import prod
 
 class NummyArray:
+  # Layer 1
   def __init__(self, iterable):
 
     if (self.__valid_input(iterable)):
 
-      if (self.arr_type(iterable)):
+      if (self.__arr_type(iterable)):
 
-        shape = self.arr_shape(iterable)
+        shape = self.__arr_shape(iterable)
         self.iterable = iterable
         self.shape = tuple(shape) if shape else (0,)
         self.data = list(self.__flatten(iterable))
@@ -43,7 +44,7 @@ class NummyArray:
           self.__flatten(element, data)
     return data
 
-  def arr_shape(self, iterable, shape = None):
+  def __arr_shape(self, iterable, shape = None):
 
     if shape is None:
       shape = []
@@ -55,10 +56,10 @@ class NummyArray:
       return shape
     
     shape.append(len(iterable))
-    return self.arr_shape(iterable[0], shape)
+    return self.__arr_shape(iterable[0], shape)
   
 
-  def arr_type(self, iterable):
+  def __arr_type(self, iterable):
     
     data = self.__flatten(iterable)
     if data:
@@ -67,19 +68,73 @@ class NummyArray:
         if type(element) != type1:
           return False
     return True
+  
+  # Layer 2
+  @classmethod
+  def array(cls, iterable):
+    return NummyArray(iterable)
+  
+  
+  @classmethod
+  def zeros(cls, shape):
 
+    if isinstance(shape, int):
+      rows = cols = shape
+    
+    elif isinstance(shape, tuple):
+      if len(shape) != 2:
+        raise ValueError("Only 2D shapes supported")
+      rows, cols = shape
+    
+    else:
+      raise TypeError("Shape must be int or tuple")
+    
+    matrix = [[0 for _ in range(cols)] for _ in range(rows)]
+    return cls(matrix)
+  
+  @classmethod
+  def ones(cls, shape):
+
+    if isinstance(shape, int):
+      rows = cols = shape
+    
+    elif isinstance(shape, tuple):
+      if len(shape) != 2:
+        raise ValueError("Only 2D shapes supported")
+      rows, cols = shape
+    
+    else:
+      raise TypeError("Shape must be int or tuple")
+    
+    matrix = [[1 for _ in range(cols)] for _ in range(rows)]
+    return cls(matrix)
+
+  #TODO: Add the third function which is full, so similar to zeros and ones
 
 
 
 d0 = NummyArray([[], []])
 d1 = NummyArray([1, 2, 1])
-d2 = NummyArray([[1, 2], [3, 4]])
+d1_2 = NummyArray.array([[2, 4], 
+                        [2, 4], 
+                        [3, 1]])
+d2 = NummyArray([
+                [1, 2], 
+                [3, 4]
+                ])
 d3 = NummyArray([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])
 
-print(d1)
+# print(d1_2)
 
-print(d0.data)
-print(d1.data)
-print(d2.dtype)
-print(d3.dtype)
+zeros = NummyArray.zeros(2)
 
+# ones = NummyArray.ones()
+# print(ones)
+print(zeros)
+# print(d0.data)
+# print(d1.shape)
+# print(d2.shape)
+# print(d3.dtype)
+
+# d5 = NummyArray.array([1, 2])
+# print(d5)

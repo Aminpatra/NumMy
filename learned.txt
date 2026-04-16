@@ -1,4 +1,10 @@
-Time Taken: 3:30h
+Time Taken: 4:30h
 
 
 1- In NumPy; the data is first flatten and then stored, and we have the shape metadata so we can reconstruct the matrix/vector again.
+
+
+Limitations: 
+
+1- Doesn't check if the matrix is a balanced matrix (same column number for all rows).
+2- zeros/ones class methods aren't capable of generating tensors.
