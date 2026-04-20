@@ -74,10 +74,10 @@ class NummyArray:
   def array(cls, iterable):
     return NummyArray(iterable)
   
-  
-  @classmethod
-  def zeros(cls, shape):
 
+  @staticmethod
+  def __generate(shape, fill):
+    
     if isinstance(shape, int):
       rows = cols = shape
     
@@ -89,27 +89,25 @@ class NummyArray:
     else:
       raise TypeError("Shape must be int or tuple")
     
-    matrix = [[0 for _ in range(cols)] for _ in range(rows)]
-    return cls(matrix)
+    matrix = [[fill for _ in range(cols)] for _ in range(rows)]
+    return matrix
+  
+  # TODO: try to make it support more than 2D shapes
+  @classmethod
+  def zeros(cls, shape):
+
+    return cls(cls.__generate(shape, 0))
   
   @classmethod
   def ones(cls, shape):
 
-    if isinstance(shape, int):
-      rows = cols = shape
-    
-    elif isinstance(shape, tuple):
-      if len(shape) != 2:
-        raise ValueError("Only 2D shapes supported")
-      rows, cols = shape
-    
-    else:
-      raise TypeError("Shape must be int or tuple")
-    
-    matrix = [[1 for _ in range(cols)] for _ in range(rows)]
-    return cls(matrix)
+    return cls(cls.__generate(shape, 1))
 
-  #TODO: Add the third function which is full, so similar to zeros and ones
+
+  @classmethod
+  def full(cls, shape, fill):
+    
+    return cls(cls.__generate(shape, fill))
 
 
 
@@ -126,11 +124,11 @@ d3 = NummyArray([[[1, 2], [3, 4]], [[5, 6], [7, 8]]])
 
 # print(d1_2)
 
-zeros = NummyArray.zeros(2)
+# zeros = NummyArray.zeros(2)
 
 # ones = NummyArray.ones()
 # print(ones)
-print(zeros)
+# print(zeros)
 # print(d0.data)
 # print(d1.shape)
 # print(d2.shape)
@@ -138,3 +136,6 @@ print(zeros)
 
 # d5 = NummyArray.array([1, 2])
 # print(d5)
+
+full = NummyArray.full(2, 10)
+print(full)
